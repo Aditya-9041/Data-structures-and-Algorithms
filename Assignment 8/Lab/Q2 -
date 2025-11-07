@@ -1,0 +1,97 @@
+#include<iostream>
+using namespace std;
+
+class node {
+    public:
+        int data;
+        node* left;
+        node* right;
+
+    node(int d) {
+        this -> data = d;
+        this -> left = NULL;
+        this -> right = NULL;
+    }
+};
+
+node * insertintoBST(node *root,int d){
+    if(root == nullptr){
+        root = new node(d);
+        return root;
+    }
+    if(d > root->data){
+        root -> right = insertintoBST(root -> right,d);
+    }
+    else{
+        root -> left = insertintoBST(root -> left,d);
+    }
+    return root;
+}
+
+node *searchNode(node * root,int key){
+    if(root->data == key || root ==NULL){
+        return root;
+    }
+    if(key < root->data){
+        return root -> left = searchNode(root->left,key);
+    }
+    else{
+        return root -> right = searchNode(root->left,key);
+        
+    }
+}
+
+node* findMin(Node* root) {
+    while (root && root->left != nullptr)
+        root = root->left;
+    return root;
+}
+
+node* findMax(Node* root) {
+    while (root && root->right != nullptr)
+        root = root->right;
+    return root;
+}
+
+Node* inorderSuccessor(Node* root, Node* n) {
+    if (n->right != nullptr)
+        return findMin(n->right);
+
+    Node* successor = nullptr;
+    while (root != nullptr) {
+        if (n->data < root->data) {
+            successor = root;
+            root = root->left;
+        }
+        else if (n->data > root->data)
+            root = root->right;
+        else
+            break;
+    }
+    return successor;
+}
+Node* inorderPredecessor(Node* root, Node* n) {
+    if (n->left != nullptr)
+        return findMax(n->left);
+
+    Node* predecessor = nullptr;
+    while (root != nullptr) {
+        if (n->data > root->data) {
+            predecessor = root;
+            root = root->right;
+        }
+        else if (n->data < root->data)
+            root = root->left;
+        else
+            break;
+    }
+    return predecessor;
+}
+
+int main(){
+    node * root;
+    int arr[5] = {4,3,6,9,5};
+    for(int i = 0; i < 5;i++){
+        insertintoBST(root,arr[i]);
+    }
+}
